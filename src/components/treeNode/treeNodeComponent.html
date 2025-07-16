@@ -1,0 +1,27 @@
+<div class="tree-node">
+  <div class="node" [class.gray]="node.is_deleted">
+    <label>
+      @if(isFirstType) {
+        {{ node.id }}
+      }
+      {{ node.title}}
+      @if(isSecondType) {
+        {{hasChildren ? 'детей: ' + node.children.length : '' }}
+      }
+    </label>
+    @if(hasChildren){
+      <span role="button" tabindex="0"
+        (click)="toggleExpanded()"
+        (keydown.enter)="toggleExpanded()"
+        (keydown.space)="toggleExpanded()">
+        {{ isExpanded ? '▲' : '▼' }}
+      </span>
+    }
+  </div>
+  @if (hasChildren && isExpanded)
+  {
+    @for (children of node.children; track children.id) {
+      <treeNode [node]="children" [type]="type" [isExpanded]="isSecondType"/>
+    }
+  }
+</div>
